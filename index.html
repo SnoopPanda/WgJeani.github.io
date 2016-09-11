@@ -312,42 +312,59 @@
         
           
             <h5 id="思路一："><a href="#思路一：" class="headerlink" title="思路一："></a>思路一：</h5><p>获得系统自带滚动条参考：(<a href="http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator" target="_blank" rel="external">http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator</a>)<br>具体方法：</p>
-<p>-(void)scrollViewDidScroll:(UIScrollView *)scrollView{</p>
-<p>dispatch_async(dispatch_get_main_queue(), ^{<br>//get refrence of vertical indicator<br>UIImageView <em>verticalIndicator = ((UIImageView </em>)[scrollView.subviews objectAtIndex:(scrollView.subviews.count-1)]);<br>// get the relative position of the indicator in the main window<br>//    CGPoint p = [verticalIndicator convertPoint:verticalIndicator.bounds.origin toView:[[UIApplication sharedApplication] keyWindow]];</p>
-<p>CGPoint p = CGPointMake(verticalIndicator.frame.origin.x-10,<br>verticalIndicator.frame.origin.y - scrollView.contentOffset.y);<br>// set the custom view new position<br>CGRect indicatorFrame = CGRectMake(verticalIndicator.frame.origin.x, verticalIndicator.frame.origin.y, 10, 10);<br>self.indicatorView.frame = indicatorFrame;<br>});<br>}<br>确保在初始化indicatorView</p>
-<p>indicatorView=[[UIView alloc]initWithFrame:CGRectMake( p.x, p.y , 10,   10)];<br>indicatorView.backgroundColor=[UIColor blueColor];<br>[self.tableView       addSubview:indicatorView];</p>
-<h5 id="思路二："><a href="#思路二：" class="headerlink" title="思路二："></a>思路二：</h5><p>手动计算滚动条的高度以及滚动条在活动过程中得位置</p>
-<p>公式一：滚动条高度 ：scrollView高度 = scrollView高度 : contentSize高度<br>公式二：indicatorView上约束 : scrollView高度 - 滚动条高度 = offsetY : contentSize高度 - scrollView高度<br>小tip:做indicatorView上约束的时候要加上contentOffsetY的值<br>我在代码中具体运用</p>
-<ul>
-<li>(void)scrollViewDidScroll:(UIScrollView *)scrollView {<pre><code>float p = scrollView.contentOffset.y/(scrollView.contentSize.height - scrollView.frame.size.height);
-[_indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
-make.top.offset(scrollView.contentOffset.y+p*(scrollView.frame.size.height - self.indicatorHeight));
-}];
-</code></pre>}</li>
-</ul>
-<h5 id="其他的小细节："><a href="#其他的小细节：" class="headerlink" title="其他的小细节："></a>其他的小细节：</h5><p>滚动条隐藏</p>
-<ul>
-<li><p>(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {</p>
-<pre><code>self.indicatorView.alpha = 1;
-</code></pre><p>}</p>
-</li>
-<li><p>(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {</p>
-<pre><code>if (decelerate) {
-    return;
-}
-[UIView animateWithDuration:0.25 animations:^{
-    self.indicatorView.alpha = 0;
-}];
-</code></pre><p>}</p>
-</li>
-<li><p>(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {</p>
-<pre><code>[UIView animateWithDuration:0.25 animations:^{
-    self.indicatorView.alpha = 0;
-}];
-</code></pre><p>}</p>
-</li>
-</ul>
+<pre><code>-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
 
+    dispatch_async(dispatch_get_main_queue(), ^{
+    //get refrence of vertical indicator
+    UIImageView *verticalIndicator = ((UIImageView *)[scrollView.subviews objectAtIndex:(scrollView.subviews.count-1)]);
+    // get the relative position of the indicator in the main window
+    //    CGPoint p = [verticalIndicator convertPoint:verticalIndicator.bounds.origin toView:[[UIApplication sharedApplication] keyWindow]];
+
+    CGPoint p = CGPointMake(verticalIndicator.frame.origin.x-10,
+    verticalIndicator.frame.origin.y - scrollView.contentOffset.y);
+    // set the custom view new position
+    CGRect indicatorFrame = CGRectMake(verticalIndicator.frame.origin.x, verticalIndicator.frame.origin.y, 10, 10);
+    self.indicatorView.frame = indicatorFrame;
+    });
+}
+</code></pre><p>确保在初始化indicatorView</p>
+<pre><code>indicatorView=[[UIView alloc]initWithFrame:CGRectMake( p.x, p.y , 10,   10)];
+indicatorView.backgroundColor=[UIColor blueColor];
+[self.tableView       addSubview:indicatorView];
+</code></pre><h5 id="思路二："><a href="#思路二：" class="headerlink" title="思路二："></a>思路二：</h5><p>手动计算滚动条的高度以及滚动条在活动过程中得位置</p>
+<pre><code>公式一：滚动条高度 ：scrollView高度 = scrollView高度 : contentSize高度
+公式二：indicatorView上约束 : scrollView高度 - 滚动条高度 = offsetY : contentSize高度 - scrollView高度
+小tip:做indicatorView上约束的时候要加上contentOffsetY的值
+我在代码中具体运用
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+        float p = scrollView.contentOffset.y/(scrollView.contentSize.height - scrollView.frame.size.height);
+        [_indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.offset(scrollView.contentOffset.y+p*(scrollView.frame.size.height - self.indicatorHeight));
+        }];
+}
+</code></pre><h5 id="其他的小细节："><a href="#其他的小细节：" class="headerlink" title="其他的小细节："></a>其他的小细节：</h5><p>滚动条隐藏</p>
+<pre><code>- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+        self.indicatorView.alpha = 1;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+
+        if (decelerate) {
+            return;
+        }
+        [UIView animateWithDuration:0.25 animations:^{
+            self.indicatorView.alpha = 0;
+        }];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+
+        [UIView animateWithDuration:0.25 animations:^{
+            self.indicatorView.alpha = 0;
+        }];
+}
+</code></pre>
           
         
       
