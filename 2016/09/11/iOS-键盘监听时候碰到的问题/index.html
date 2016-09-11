@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Snoop Panda" />
+  <meta name="keywords" content="iOS笔记," />
 
 
 
@@ -84,28 +84,25 @@
 
 
 
-<meta name="description" content="#####思路一：
-获得系统自带滚动条参考：(http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator)具体方法：
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-
-dispatch_async(dispatch_">
+<meta name="description" content="做第三方分享的时候，碰到分享Weibo回来以后原视图往上走大概键盘大小的坑。一顿分析找到了原因：分享到Weibo的时候是在编辑Weibo界面唤起了键盘，所以看到会看到如上现象。
+解决办法：判断当前视图结构中有没有第一响应者，如果没有的话不做键盘的监听事件，代码如下：
+找到第一响应者的方法：
+- (UIView *)findFirstResponderView: (UIView *)view {">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Snoop Panda">
-<meta property="og:url" content="http://www.snooppanda.com/2016/09/10/iOS-自定义滚动条的两种思路/index.html">
+<meta property="og:title" content="iOS-键盘监听时候碰到的问题">
+<meta property="og:url" content="http://www.snooppanda.com/2016/09/11/iOS-键盘监听时候碰到的问题/index.html">
 <meta property="og:site_name" content="Snoop Panda">
-<meta property="og:description" content="#####思路一：
-获得系统自带滚动条参考：(http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator)具体方法：
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-
-dispatch_async(dispatch_">
-<meta property="og:updated_time" content="2016-09-11T05:15:10.000Z">
+<meta property="og:description" content="做第三方分享的时候，碰到分享Weibo回来以后原视图往上走大概键盘大小的坑。一顿分析找到了原因：分享到Weibo的时候是在编辑Weibo界面唤起了键盘，所以看到会看到如上现象。
+解决办法：判断当前视图结构中有没有第一响应者，如果没有的话不做键盘的监听事件，代码如下：
+找到第一响应者的方法：
+- (UIView *)findFirstResponderView: (UIView *)view {">
+<meta property="og:updated_time" content="2016-09-11T06:36:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Snoop Panda">
-<meta name="twitter:description" content="#####思路一：
-获得系统自带滚动条参考：(http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator)具体方法：
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-
-dispatch_async(dispatch_">
+<meta name="twitter:title" content="iOS-键盘监听时候碰到的问题">
+<meta name="twitter:description" content="做第三方分享的时候，碰到分享Weibo回来以后原视图往上走大概键盘大小的坑。一顿分析找到了原因：分享到Weibo的时候是在编辑Weibo界面唤起了键盘，所以看到会看到如上现象。
+解决办法：判断当前视图结构中有没有第一响应者，如果没有的话不做键盘的监听事件，代码如下：
+找到第一响应者的方法：
+- (UIView *)findFirstResponderView: (UIView *)view {">
 
 
 
@@ -126,9 +123,9 @@ dispatch_async(dispatch_">
 
 
 
-  <link rel="canonical" href="http://www.snooppanda.com/2016/09/10/iOS-自定义滚动条的两种思路/"/>
+  <link rel="canonical" href="http://www.snooppanda.com/2016/09/11/iOS-键盘监听时候碰到的问题/"/>
 
-  <title>  | Snoop Panda </title>
+  <title> iOS-键盘监听时候碰到的问题 | Snoop Panda </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -220,16 +217,6 @@ dispatch_async(dispatch_">
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
 
       
     </ul>
@@ -268,7 +255,7 @@ dispatch_async(dispatch_">
             
             
               
-                
+                iOS-键盘监听时候碰到的问题
               
             
           </h1>
@@ -280,8 +267,8 @@ dispatch_async(dispatch_">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-10T11:23:46+08:00" content="2016-09-10">
-              2016-09-10
+            <time itemprop="dateCreated" datetime="2016-09-11T14:34:10+08:00" content="2016-09-11">
+              2016-09-11
             </time>
           </span>
 
@@ -295,7 +282,7 @@ dispatch_async(dispatch_">
 
           
           
-             <span id="/2016/09/10/iOS-自定义滚动条的两种思路/" class="leancloud_visitors" data-flag-title="">
+             <span id="/2016/09/11/iOS-键盘监听时候碰到的问题/" class="leancloud_visitors" data-flag-title="iOS-键盘监听时候碰到的问题">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -317,59 +304,47 @@ dispatch_async(dispatch_">
       
 
       
-        <p>#####思路一：</p>
-<p>获得系统自带滚动条参考：(<a href="http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator" target="_blank" rel="external">http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator</a>)<br>具体方法：</p>
-<pre><code>-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+        <p>做第三方分享的时候，碰到分享Weibo回来以后原视图往上走大概键盘大小的坑。一顿分析找到了原因：分享到Weibo的时候是在编辑Weibo界面唤起了键盘，所以看到会看到如上现象。</p>
+<p>解决办法：<br>判断当前视图结构中有没有第一响应者，如果没有的话不做键盘的监听事件，代码如下：</p>
+<p>找到第一响应者的方法：</p>
+<pre><code>- (UIView *)findFirstResponderView: (UIView *)view {
 
-dispatch_async(dispatch_get_main_queue(), ^{
-//get refrence of vertical indicator
-UIImageView *verticalIndicator = ((UIImageView *)[scrollView.subviews objectAtIndex:(scrollView.subviews.count-1)]);
-// get the relative position of the indicator in the main window
-//    CGPoint p = [verticalIndicator convertPoint:verticalIndicator.bounds.origin toView:[[UIApplication sharedApplication] keyWindow]];
+    for (UIView *childView in view.subViews) {
+    if ([childView respondsToSelector:@selector(isFirstResponder)] &amp;&amp; [childView isFirstResponder])
+    return childView;
+    UIView *result = [self findFirstResponderView:childView];
+    if(result) return result;
+    }
+    return nil;
+}
+</code></pre><p>进行判断：</p>
+<pre><code>- (void)keyboardWillShow:(NSNotification *)notification {
 
-CGPoint p = CGPointMake(verticalIndicator.frame.origin.x-10,
-verticalIndicator.frame.origin.y - scrollView.contentOffset.y);
-// set the custom view new position
-CGRect indicatorFrame = CGRectMake(verticalIndicator.frame.origin.x, verticalIndicator.frame.origin.y, 10, 10);
-self.indicatorView.frame = indicatorFrame;
-});
-}
-</code></pre><p>确保在初始化indicatorView</p>
-<pre><code>indicatorView=[[UIView alloc]initWithFrame:CGRectMake( p.x, p.y , 10,   10)];
-indicatorView.backgroundColor=[UIColor blueColor];
-[self.tableView       addSubview:indicatorView];
-</code></pre><p>#####思路二：</p>
-<p>手动计算滚动条的高度以及滚动条在活动过程中得位置</p>
-<pre><code>公式一：滚动条高度 ：scrollView高度 = scrollView高度 : contentSize高度
-公式二：indicatorView上约束 : scrollView高度 - 滚动条高度 = offsetY : contentSize高度 - scrollView高度
-小tip:做indicatorView上约束的时候要加上contentOffsetY的值
-</code></pre><p>我在代码中具体运用</p>
-<pre><code>- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-        float p = scrollView.contentOffset.y/(scrollView.contentSize.height - scrollView.frame.size.height);
-        [_indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.offset(scrollView.contentOffset.y+p*(scrollView.frame.size.height - self.indicatorHeight));
-        }];
-}
-</code></pre><p>#####其他的小细节：<br>滚动条隐藏</p>
-<pre><code>- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-        self.indicatorView.alpha = 1;
+    if(![self findFirstResponderView:self]) {
+    return;
+    }
+
+    NSValue *frameValue = [[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [frameValue CGRectValue].size;
+
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    self.frame = CGRectMake(0, -keyboardSize.height, SCREEN_WIDTH, SCREEN_HEIGHT);
+    [UIView commitAnimations];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+- (void)keyboardWillHide:(NSNotification *)notification {
 
-        if (decelerate) {
-            return;
-        }
-        [UIView animateWithDuration:0.25 animations:^{
-            self.indicatorView.alpha = 0;
-        }];
-}
+    if (![self findFirstResponderView:self]) {
+    return;
+    }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-
-        [UIView animateWithDuration:0.25 animations:^{
-            self.indicatorView.alpha = 0;
-        }];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    [UIView commitAnimations];
 }
 </code></pre>
       
@@ -391,18 +366,24 @@ indicatorView.backgroundColor=[UIColor blueColor];
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/iOS笔记/" rel="tag">#iOS笔记</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/09/11/iOS-自定义滚动条/" rel="next" title="iOS-自定义滚动条">
+                <i class="fa fa-chevron-left"></i> iOS-自定义滚动条
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/09/11/iOS-自定义滚动条/" rel="prev" title="iOS-自定义滚动条">
-                iOS-自定义滚动条 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
