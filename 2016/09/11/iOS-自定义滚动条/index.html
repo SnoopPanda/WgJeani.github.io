@@ -84,16 +84,25 @@
 
 
 
-<meta name="description" content="人生是一场漫长的对抗。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://www.snooppanda.com/tags/index.html">
+<meta name="description" content="#####思路一：
+获得系统自带滚动条参考：(http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator)具体方法：
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+dispatch_async(dispatch_g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-自定义滚动条">
+<meta property="og:url" content="http://www.snooppanda.com/2016/09/11/iOS-自定义滚动条/index.html">
 <meta property="og:site_name" content="Snoop Panda">
-<meta property="og:description" content="人生是一场漫长的对抗。">
-<meta property="og:updated_time" content="2016-09-11T04:22:41.000Z">
+<meta property="og:description" content="#####思路一：
+获得系统自带滚动条参考：(http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator)具体方法：
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+dispatch_async(dispatch_g">
+<meta property="og:updated_time" content="2016-09-11T05:17:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="人生是一场漫长的对抗。">
+<meta name="twitter:title" content="iOS-自定义滚动条">
+<meta name="twitter:description" content="#####思路一：
+获得系统自带滚动条参考：(http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator)具体方法：
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+dispatch_async(dispatch_g">
 
 
 
@@ -114,15 +123,9 @@
 
 
 
-  <link rel="canonical" href="http://www.snooppanda.com/tags/"/>
+  <link rel="canonical" href="http://www.snooppanda.com/2016/09/11/iOS-自定义滚动条/"/>
 
-  <title>
-  
-
-  
-    标签 | Snoop Panda
-  
-</title>
+  <title> iOS-自定义滚动条 | Snoop Panda </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -143,7 +146,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -243,16 +246,159 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-      <div class="tag-cloud">
-        <div class="tag-cloud-title">
-            暂无标签
-        </div>
-        <div class="tag-cloud-tags">
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS-自定义滚动条
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T13:16:30+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/11/iOS-自定义滚动条/" class="leancloud_visitors" data-flag-title="iOS-自定义滚动条">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
           
         </div>
-      </div>
+      </header>
     
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#####思路一：</p>
+<p>获得系统自带滚动条参考：(<a href="http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator" target="_blank" rel="external">http://stackoverflow.com/questions/32460973/uiview-that-follows-uicollectionview-indicator</a>)<br>具体方法：</p>
+<p>-(void)scrollViewDidScroll:(UIScrollView *)scrollView{</p>
+<p>dispatch_async(dispatch_get_main_queue(), ^{<br>//get refrence of vertical indicator<br>UIImageView <em>verticalIndicator = ((UIImageView </em>)[scrollView.subviews objectAtIndex:(scrollView.subviews.count-1)]);<br>// get the relative position of the indicator in the main window<br>//    CGPoint p = [verticalIndicator convertPoint:verticalIndicator.bounds.origin toView:[[UIApplication sharedApplication] keyWindow]];</p>
+<p>CGPoint p = CGPointMake(verticalIndicator.frame.origin.x-10,<br>verticalIndicator.frame.origin.y - scrollView.contentOffset.y);<br>// set the custom view new position<br>CGRect indicatorFrame = CGRectMake(verticalIndicator.frame.origin.x, verticalIndicator.frame.origin.y, 10, 10);<br>self.indicatorView.frame = indicatorFrame;<br>});<br>}<br>确保在初始化indicatorView</p>
+<p>indicatorView=[[UIView alloc]initWithFrame:CGRectMake( p.x, p.y , 10,   10)];<br>indicatorView.backgroundColor=[UIColor blueColor];<br>[self.tableView       addSubview:indicatorView];</p>
+<p>#####思路二：</p>
+<p>手动计算滚动条的高度以及滚动条在活动过程中得位置</p>
+<p>公式一：滚动条高度 ：scrollView高度 = scrollView高度 : contentSize高度<br>公式二：indicatorView上约束 : scrollView高度 - 滚动条高度 = offsetY : contentSize高度 - scrollView高度<br>小tip:做indicatorView上约束的时候要加上contentOffsetY的值<br>我在代码中具体运用</p>
+<ul>
+<li>(void)scrollViewDidScroll:(UIScrollView *)scrollView {<pre><code>float p = scrollView.contentOffset.y/(scrollView.contentSize.height - scrollView.frame.size.height);
+[_indicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+make.top.offset(scrollView.contentOffset.y+p*(scrollView.frame.size.height - self.indicatorHeight));
+}];
+</code></pre>}</li>
+</ul>
+<p>#####其他的小细节：<br>滚动条隐藏</p>
+<ul>
+<li><p>(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {</p>
+<pre><code>self.indicatorView.alpha = 1;
+</code></pre><p>}</p>
+</li>
+<li><p>(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {</p>
+<pre><code>if (decelerate) {
+    return;
+}
+[UIView animateWithDuration:0.25 animations:^{
+    self.indicatorView.alpha = 0;
+}];
+</code></pre><p>}</p>
+</li>
+<li><p>(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {</p>
+<pre><code>[UIView animateWithDuration:0.25 animations:^{
+    self.indicatorView.alpha = 0;
+}];
+</code></pre><p>}</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/10/iOS-自定义滚动条的两种思路/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -284,8 +430,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpeg"
@@ -321,6 +476,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -424,6 +590,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
